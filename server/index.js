@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the auth system')
 })
 
+//protecting a route using a token
 app.get('/api/user/profile', verifyToken, (req, res) => {
   res.send('This is the user profile')
 })
