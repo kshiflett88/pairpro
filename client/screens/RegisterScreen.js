@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik'
 
-const RegisterScreen = () => {
+const RegisterScreen = navData => {
 
   return (
    <KeyboardAvoidingView
@@ -18,6 +18,7 @@ const RegisterScreen = () => {
           }}
           onSubmit={(values) => {
             console.log(values)
+            navData.navigation.navigate('Home')
           }}
         >
           {(props) => (
@@ -57,7 +58,7 @@ const RegisterScreen = () => {
                 </TouchableOpacity>
                 <View style={styles.registerContainer}>
                   <Text style={styles.registerText}>Have an account?</Text>
-                  <TouchableOpacity >
+                  <TouchableOpacity onPress={() => navData.navigation.navigate('Login')} >
                     <Text style={styles.registerButton}>Login</Text>
                   </TouchableOpacity>
                 </View>
