@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { Formik } from 'formik'
 
 //has special props passed down from stack navigator 
@@ -8,7 +8,7 @@ const LoginScreen = navData => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height" }
       style={{flex: 1}}
     >
       <ScrollView>

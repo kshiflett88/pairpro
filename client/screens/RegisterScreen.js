@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { Formik } from 'formik'
 
 const RegisterScreen = navData => {
@@ -8,6 +8,7 @@ const RegisterScreen = navData => {
    <KeyboardAvoidingView
       behavior="padding"
       style={{flex: 1}}
+      behavior={Platform.OS === "ios" ? "padding" : "height" }
     >
       <ScrollView>
         <Formik
