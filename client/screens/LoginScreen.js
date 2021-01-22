@@ -30,14 +30,21 @@ const LoginScreen = () => {
                   placeholder="Email"
                   placeholderTextColor="#fff"
                   keyboardType="email-address"
+                  onChangeText={props.handleChange('email')} //corressponds to initialValues
+                  value={props.values.email}
                 />
                  <TextInput 
                   style={styles.input} 
                   placeholder="Password"
                   placeholderTextColor="#fff"
                   secureTextEntry={true}
+                  onChangeText={props.handleChange('password')} //corressponds to initialValues
+                  value={props.values.password}
                 />
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity 
+                  style={styles.button} 
+                  onPress={props.handleSubmit}
+                >
                   <Text style={styles.buttonText} >Login</Text>
                 </TouchableOpacity>
                 <View style={styles.registerContainer}>
