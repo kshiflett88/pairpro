@@ -1,6 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
-import { Formik } from 'formik'
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+//validation schema 
+const formSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required().min(6)
+})
 
 //has special props passed down from stack navigator 
 const LoginScreen = navData => {
@@ -17,6 +24,7 @@ const LoginScreen = navData => {
             email: "",
             password: ""
           }}
+          validationSchema={formSchema}
           onSubmit={(values) => {
             console.log(values)
             navData.navigation.navigate('Home')
@@ -35,7 +43,9 @@ const LoginScreen = navData => {
                   keyboardType="email-address"
                   onChangeText={props.handleChange('email')} //corressponds to initialValues
                   value={props.values.email}
+                  onBlur={props.handleBlur('email')}
                 />
+                <Text style={styles.error}>{props.touched.email && props.errors.email}</Text>
                  <TextInput 
                   style={styles.input} 
                   placeholder="Password"
@@ -43,7 +53,9 @@ const LoginScreen = navData => {
                   secureTextEntry={true}
                   onChangeText={props.handleChange('password')} //corressponds to initialValues
                   value={props.values.password}
+                  onBlur={props.handleBlur('password')}
                 />
+                <Text style={styles.error}>{props.touched.password && props.errors.password}</Text>
                 <TouchableOpacity 
                   style={styles.button} 
                   onPress={props.handleSubmit}
