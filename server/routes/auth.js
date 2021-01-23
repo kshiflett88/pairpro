@@ -9,6 +9,11 @@ const secretKey = process.env.SECRETKEY
 const router = express.Router();
 
 const User = require('../models/User');
+const generateToken = user => {
+  return jwt.sign(
+    {_id: user._id, email: user.email, fullName: user.fullName}, 
+    secretKey)
+}
 
 const validate = [
   check('fullName')
@@ -54,11 +59,13 @@ router.post('/register', validate, async (req, res) => {
 
   try{
     const savedUser = await user.save(); //async action will take time to get response so make use of await
+    const token = generateToken(user)
     res.send({success: true, data: {
         id: savedUser._id, 
         fullName: savedUser.fullName, 
         email: savedUser.email
       },
+      token
     })
   } catch (error) {
     res.status(400).send({success: false, error})
@@ -84,7 +91,7 @@ router.post('/login', loginValidation, async (req, res) => {
   if(!validPassword) return res.status(404).send({success: false, message: 'Invalid Email or Password'});
 
   //create and assign a token
-  const token = jwt.sign({_id: user._id, email: user.email}, secretKey)
+  const token = generateToken(user)
   res
     .header('auth-token', token)
     .send({success: true, message: 'Logged in successfully', token})

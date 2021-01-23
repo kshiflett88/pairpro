@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 //protecting a route using a token
 app.get('/api/user/profile', verifyToken, (req, res) => {
-  res.send('This is the user profile')
+  res.send({success: true, data: req.user})
 })
 
 app.use('/api/users', authRoutes);
