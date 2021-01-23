@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import * as authAction from '../redux/actions/authAction';
 
 //validation schema 
 const formSchema = yup.object({
@@ -12,6 +14,7 @@ const formSchema = yup.object({
 //has special props passed down from stack navigator 
 const LoginScreen = navData => {
 
+  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView
@@ -26,8 +29,17 @@ const LoginScreen = navData => {
           }}
           validationSchema={formSchema}
           onSubmit={(values) => {
-            console.log(values)
-            navData.navigation.navigate('Home')
+            dispatch(authAction.loginUser(values))
+              .then(result => {
+                //result is from returning resultData in the loginUser action could've called it anything
+                console.log(result)
+                if (result.success) {
+                  navData.navigation.navigate('Home')
+                } else {
+                  Alert.alert(result.message)
+                }
+              })
+              .catch(err => console.log(err))
           }}
         >
           {(props) => (

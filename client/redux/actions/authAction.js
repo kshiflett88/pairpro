@@ -9,11 +9,31 @@ export const registerUser = (authData) => {
   return async dispatch => {
 
     //logic to make post request to REGISTER the user
-
-    dispatch({
-      type: REGISTER_USER_SUCCESS,
-      payload: 1
+    const result = await fetch('http://localhost:3000/api/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fullName,
+        email,
+        password
+      })
     })
+
+    const resultData = await result.json();
+
+    if (resultData.success) {
+      dispatch({
+        type: REGISTER_USER_SUCCESS,
+        payload: resultData
+      })
+    } else {
+      dispatch({
+        type: REGISTER_USER_FAIL,
+      })
+    }
+    return resultData
   }
 }
 
@@ -23,10 +43,32 @@ export const loginUser = (authData) => {
   return async dispatch => {
 
     //logic to make post request to LOGIN the user
-
-    dispatch({
-      type: LOGIN_USER_SUCCESS,
-      payload: 1
+    const result = await fetch('http://localhost:3000/api/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
     })
+
+    const resultData = await result.json();
+    console.log(resultData)
+
+    if (resultData.success) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: resultData
+      })
+    } else {
+      dispatch({
+        type: LOGIN_USER_FAIL,
+      })
+    }
+    //return so that in login screen we have access to resultData in our then
+    return resultData;
+
   }
 }

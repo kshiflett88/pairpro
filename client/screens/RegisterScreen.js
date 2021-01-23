@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+
+import * as authAction from '../redux/actions/authAction';
 
 //validation schema 
 const formSchema = yup.object({
@@ -11,6 +14,8 @@ const formSchema = yup.object({
 })
 
 const RegisterScreen = navData => {
+
+  const dispatch = useDispatch();
 
   return (
    <KeyboardAvoidingView
@@ -27,8 +32,15 @@ const RegisterScreen = navData => {
           }}
           validationSchema={formSchema}
           onSubmit={(values) => {
-            console.log(values)
-            navData.navigation.navigate('Home')
+            dispatch(authAction.registerUser(values))
+              .then(result => {
+                if (result.success) {
+                  navData.navigation.navigate('Home')
+                } else {
+                  Alert.alert('Registration failed. Try Again')
+                }
+              })
+              .catch(err => console.log(err))
           }}
         >
           {(props) => (
