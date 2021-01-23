@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, ScrollView, Image, KeyboardAvoidingView, TextIn
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import * as authAction from '../redux/actions/authAction';
 
 //validation schema 
@@ -30,11 +32,15 @@ const LoginScreen = navData => {
           validationSchema={formSchema}
           onSubmit={(values) => {
             dispatch(authAction.loginUser(values))
-              .then(result => {
+              .then( async result => {
                 //result is from returning resultData in the loginUser action could've called it anything
-                console.log(result)
                 if (result.success) {
-                  navData.navigation.navigate('Home')
+                  try {
+                    await AsyncStorage.setItem('token', result.token)
+                    navData.navigation.navigate('Home')                 
+                  } catch (error) {
+                    console.log(error)
+                  }
                 } else {
                   Alert.alert(result.message)
                 }
