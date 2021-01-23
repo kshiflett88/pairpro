@@ -55,7 +55,6 @@ export const loginUser = (authData) => {
     })
 
     const resultData = await result.json();
-    console.log(resultData)
 
     if (resultData.success) {
       dispatch({
