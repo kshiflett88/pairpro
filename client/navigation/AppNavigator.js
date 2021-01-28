@@ -1,11 +1,17 @@
 import React from 'react';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from '../screens/LoginScreen';
+
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ProjectListingScreen from '../screens/ProjectListingScreen';
+import AddProjectScreen from '../screens/AddProjectScreen';
+
 
 const Stack = createStackNavigator();
+// const Tab = createBottomTabNavigator();
 
 function AppNavigator() {
 
