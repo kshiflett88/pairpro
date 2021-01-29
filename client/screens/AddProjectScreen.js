@@ -6,7 +6,7 @@ const AddProjectScreen = () => {
 
   return (
     <View>
-      <Tex>This is where we add a project</Tex>
+      <Text>This is where we add a project</Text>
     </View>
   )
 }

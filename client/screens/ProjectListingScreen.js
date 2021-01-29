@@ -6,7 +6,7 @@ const ProjectListingScreen = () => {
 
   return (
     <View>
-      <Tex>List of projects</Tex>
+      <Text>List of projects</Text>
     </View>
   )
 }
