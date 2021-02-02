@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { Button } from 'react-native';
+import { NavigationContainer, StackActions, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -8,10 +9,18 @@ import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProjectListingScreen from '../screens/ProjectListingScreen';
 import AddProjectScreen from '../screens/AddProjectScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const HeaderRight = () => {
+  const navigation = useNavigation();
+  return (
+    <Button onPress={() => {navigation.navigate('Edit Profile')}} title="Edit" />
+  )
+}
 
 function HomeNavigator() {
   return (
@@ -41,7 +50,11 @@ function AppNavigator() {
         <Stack.Screen 
           name="Home"
           component={HomeNavigator}
-          options={{headerLeft: null}}
+          options={{headerLeft: null, headerRight: () => <HeaderRight/>}}
+        />
+        <Stack.Screen 
+          name="Edit Profile"
+          component={EditProfileScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
