@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setAlert } from '../../actions/alert';
+// import { setAlert } from '../../actions/alert';
+// import { register } from '../../actions/auth';
 import * as alertActions from '../../actions/alert';
+import * as authActions from '../../actions/auth';
 import PropTypes from 'prop-types'
 import { useDispatch } from "react-redux";
 
 // Another way to handle actions as props
-// const Register = ({ setAlert }) => {
+// const Register = ({ setAlert, register }) => {
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -27,7 +29,7 @@ const Register = () => {
     if(password !== password2) {
       dispatch(alertActions.setAlert('Passwords do not match', 'danger'))
     } else {
-      console.log("Success")
+      dispatch(authActions.register({ name, email, password}));
     }
   }
 
@@ -43,7 +45,7 @@ const Register = () => {
             name="name" 
             value={name}
             onChange={e => onChange(e)}
-            required />
+          />
         </div>
         <div className="form-group">
           <input 
@@ -89,8 +91,9 @@ const Register = () => {
 
 {/* Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 }; */}
 
-{/* export default connect(null, { setAlert })(Register); */}
+{/* export default connect(null, { setAlert, register })(Register); */}
 
 export default Register;
