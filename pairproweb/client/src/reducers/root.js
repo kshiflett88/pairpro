@@ -5,7 +5,8 @@ import profile from './profile';
 
 const RootReducer = combineReducers({
   alert,
-  auth
+  auth,
+  profile
 });
 
 export default RootReducer;
