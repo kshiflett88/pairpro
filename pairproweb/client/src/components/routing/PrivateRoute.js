@@ -25,6 +25,7 @@ const PrivateRoute = ({ component: Component, ...rest}) => {
 
 export default PrivateRoute;
 
+
 // Without useSelector hook and using mapStateToProps and connect
 
 // const PrivateRoute = ({ 
