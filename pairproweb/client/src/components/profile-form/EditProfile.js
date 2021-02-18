@@ -1,12 +1,16 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { createProfile } from '../../actions/profile';
+import * as profileActions from '../../actions/profile';
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
-const CreateProfile = ({ history }) => {
+// const EditProfile = ({ profile, history, getCurrentProfile, createProfile }) => {
+const EditProfile = ({ history }) => {
+  const dispatch = useDispatch();
+  const {profile, loading} = useSelector(state => state.profile)
+
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -24,6 +28,25 @@ const CreateProfile = ({ history }) => {
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+  useEffect(() => {
+    dispatch(profileActions.getCurrentProfile());
+
+    setFormData({
+      company: loading || !profile.company ? '' : profile.company,
+      website: loading || !profile.website ? '' : profile.website,
+      location: loading || !profile.location ? '' : profile.location,
+      status: loading || !profile.status ? '' : profile.status,
+      skills: loading || !profile.skills ? '' : profile.skills.join(','),
+      githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social ? '' : profile.social.youtube,
+      instagram: loading || !profile.social ? '' : profile.social.instagram,
+    })
+  }, [loading])
+
   const {
     company,
     website,
@@ -39,18 +62,17 @@ const CreateProfile = ({ history }) => {
     instagram
   } = formData;
 
-  const dispatch = useDispatch();
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(createProfile(formData, history));
+    dispatch(profileActions.createProfile(formData, history, true));
   }
   return (
     <Fragment>
       <h1 className="large text-primary">
-        Create Your Profile
+        Edit Your Profile
       </h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
@@ -160,8 +182,14 @@ const CreateProfile = ({ history }) => {
 
 {/* CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+} */}
+
+{/* const mapStateToProps = state => {
+  profile: state.profile
 } */}
 
 
-export default withRouter(CreateProfile)
-{/* export default connect(null, { createProfile })(withRouter(CreateProfile)) */}
+export default withRouter(EditProfile)
+{/* export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(CreateProfile)) */}

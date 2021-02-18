@@ -71,7 +71,7 @@ router.post('/', [ auth, [
   profilefields.social = {};
   if (youtube) profilefields.social.youtube = youtube;
   if (twitter) profilefields.social.twitter = twitter;
-  if (facebook) profilefields.social.company = company;
+  if (facebook) profilefields.social.facebook = facebook;
   if (linkedin) profilefields.social.linkedin = linkedin;
   if (instagram) profilefields.social.instagram = instagram;
 
