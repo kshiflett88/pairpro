@@ -191,5 +191,6 @@ const EditProfile = ({ history }) => {
 } */}
 
 
-export default withRouter(EditProfile)
+export default withRouter(EditProfile);
+
 {/* export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(CreateProfile)) */}

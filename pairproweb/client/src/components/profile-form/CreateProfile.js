@@ -163,5 +163,6 @@ const CreateProfile = ({ history }) => {
 } */}
 
 
-export default withRouter(CreateProfile)
+export default withRouter(CreateProfile);
+
 {/* export default connect(null, { createProfile })(withRouter(CreateProfile)) */}
