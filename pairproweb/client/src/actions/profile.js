@@ -5,7 +5,8 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   UPDATE_PROFILE,
-  ACCOUNT_DELETED
+  ACCOUNT_DELETED,
+  CLEAR_PROFILE
 } from './types';
 
 // Get current users profile
@@ -169,7 +170,7 @@ export const deleteEducation = id => async dispatch => {
 };
 
 // Delete account and profile
-export const deleteEducation = () => async dispatch => {
+export const deleteProfile = () => async dispatch => {
   if (window.confirm('Are you sure? This cannot be undone!')) {
     try {
       const res = await axios.delete('/api/profile');

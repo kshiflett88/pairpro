@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import * as profileActions from '../../actions/profile';
 import Moment from 'react-moment';
 
 
 import PropTypes from 'prop-types'
 
 const Education = ({ education }) => {
+
+  const dispatch = useDispatch();
 
   const educations = education.map(edu => (
     <tr key={edu._id}>
@@ -20,7 +23,7 @@ const Education = ({ education }) => {
             )}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button onClick={() => dispatch(profileActions.deleteEducation(edu._id))} className="btn btn-danger">Delete</button>
       </td>
     </tr>
   ))
