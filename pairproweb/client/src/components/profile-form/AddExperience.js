@@ -3,10 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as profileActions from '../../actions/profile';
 
-
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
 const AddExperience = ({ history }) => {
   const [formData, setFormData] = useState({
     company: '',
