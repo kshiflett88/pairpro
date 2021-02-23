@@ -12,7 +12,7 @@ const Profiles = props => {
 
   useEffect(() => {
     dispatch(getProfiles())
-  }, [])
+  }, [getProfiles])
 
   return (
     <Fragment>
