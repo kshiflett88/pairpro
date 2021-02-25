@@ -38,6 +38,7 @@ router.post('/', [
       r: 'pg', //no naked pics
       d: 'mm' //default icon
     })
+    
 
     user = new User({
       name,

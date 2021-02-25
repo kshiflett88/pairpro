@@ -2,15 +2,16 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as profileActions from '../../actions/profile';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
-// const EditProfile = ({ profile, history, getCurrentProfile, createProfile }) => {
+import * as profileActions from '../../actions/profile';
+
 const EditProfile = ({ history }) => {
   const dispatch = useDispatch();
-  const {profile, loading} = useSelector(state => state.profile)
+  const {profile, loading} = useSelector(state => state.profile);
 
+  
+  
+  
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -28,9 +29,10 @@ const EditProfile = ({ history }) => {
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+  
   useEffect(() => {
     dispatch(profileActions.getCurrentProfile());
-
+    
     setFormData({
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
@@ -46,7 +48,8 @@ const EditProfile = ({ history }) => {
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     })
   }, [loading, profileActions.getCurrentProfile])
-
+  
+  
   const {
     company,
     website,
@@ -61,14 +64,16 @@ const EditProfile = ({ history }) => {
     youtube,
     instagram
   } = formData;
-
-
+  
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
+  
   const onSubmit = e => {
     e.preventDefault();
+  
     dispatch(profileActions.createProfile(formData, history, true));
-  }
+  };
+
   return (
     <Fragment>
       <h1 className="large text-primary">
@@ -180,17 +185,4 @@ const EditProfile = ({ history }) => {
   )
 }
 
-{/* CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-} */}
-
-{/* const mapStateToProps = state => {
-  profile: state.profile
-} */}
-
-
 export default withRouter(EditProfile);
-
-{/* export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(CreateProfile)) */}

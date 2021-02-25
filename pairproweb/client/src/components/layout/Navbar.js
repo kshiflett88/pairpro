@@ -15,9 +15,10 @@ const Navbar = () => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/profiles">
-          Developers
-        </Link>
+        <Link to="/profiles">Developers</Link>
+      </li>
+      <li>
+        <Link to="/posts">Posts</Link>
       </li>
       <li>
         <Link to="/dashboard">
