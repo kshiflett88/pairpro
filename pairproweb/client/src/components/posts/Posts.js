@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import PostItem from './PostItem';
 import { getPosts } from '../../actions/post';
 import Spinner from '../layout/Spinner';
 
@@ -13,9 +13,18 @@ const Posts = () => {
     dispatch(getPosts())
   }, [])
 
-  return (
+  return loading ? <Spinner /> : (
     <Fragment>
-      
+      <h1 className="large text-primary">Posts</h1>
+      <p className="lead">
+        <i className="fas fa-user"></i> Welcome to the community
+      </p>
+      {/* Post form */}
+      <div className="posts">
+        {posts.map(post => (
+          <PostItem key={post._id} post={post} />
+        ))}
+      </div>
     </Fragment>
   )
 }
