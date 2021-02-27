@@ -3,19 +3,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import Alert from './components/layout/Alert';
-import Dashboard from './components/dashboard/Dashboard';
-import PrivateRoute from './components/routing/PrivateRoute';
-import CreateProfile from './components/profile-form/CreateProfile';
-import EditProfile from './components/profile-form/EditProfile';
-import AddExperience from './components/profile-form/AddExperience';
-import AddEducation from './components/profile-form/AddEducation';
-import Profiles from './components/profiles/Profiles';
-import Profile from './components/profile/Profile';
-import Posts from './components/posts/Posts';
-import Post from './components/post/Post';
+// import Register from './components/auth/Register';
+// import Login from './components/auth/Login';
+// import Alert from './components/layout/Alert';
+// import Dashboard from './components/dashboard/Dashboard';
+// import PrivateRoute from './components/routing/PrivateRoute';
+// import CreateProfile from './components/profile-form/CreateProfile';
+// import EditProfile from './components/profile-form/EditProfile';
+// import AddExperience from './components/profile-form/AddExperience';
+// import AddEducation from './components/profile-form/AddEducation';
+// import Profiles from './components/profiles/Profiles';
+// import Profile from './components/profile/Profile';
+// import Posts from './components/posts/Posts';
+// import Post from './components/post/Post';
+// import NotFound from './components/layout/NotFound';
+import Routes from './components/routing/Routes';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -43,9 +45,12 @@ const App = () => {
     <Router>
       <Fragment>
         <Navbar />
-        <Route exact path="/" component={Landing} />
-        <section className="container"> 
-          <Alert />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route component={Routes} />
+        </Switch>
+        {/* <section className="container"> 
+        <Alert />
           <Switch>
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
@@ -58,8 +63,9 @@ const App = () => {
             <PrivateRoute exact path='/add-education' component={AddEducation} />
             <PrivateRoute exact path='/posts' component={Posts} />
             <PrivateRoute exact path='/posts/:id' component={Post} />
+            <Route component={NotFound} />
           </Switch>
-        </section>
+        </section> */}
       </Fragment>
     </Router>
   </Provider>
