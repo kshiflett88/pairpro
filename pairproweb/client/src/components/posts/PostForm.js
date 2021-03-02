@@ -8,6 +8,8 @@ const PostForm = () => {
 
   const dispatch = useDispatch();
 
+
+
   return (
     <div className="post-form">
         <div className="bg-primary p">

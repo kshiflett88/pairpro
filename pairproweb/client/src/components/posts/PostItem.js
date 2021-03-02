@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {addLike, removeLike, deletePost } from '../../actions/post';
 
-const PostItem = ({ post: {_id, text, name, avatar, user, likes, comments, date}, showActions=true}) => {
+const PostItem = ({ post: {_id, title, text, tech, group, name, avatar, user, likes, comments, date}, showActions=true}) => {
 
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
@@ -23,6 +23,16 @@ const PostItem = ({ post: {_id, text, name, avatar, user, likes, comments, date}
             </Link>
           </div>
           <div>
+            <h2>{title}</h2>
+            <div className="tech">
+              <p className="tech-p">Tech Stack: </p>
+              {tech.map((skill, index) => (
+                <div key={index} className="tech-p"><i className=""></i>{skill}</div>
+              ))}
+            </div>  
+            <p className="my-1">
+              Number of Devs needed: {group}
+            </p>  
             <p className="my-1">
               {text}
             </p>

@@ -7,6 +7,15 @@
   --success-color: #28a745;
 }
 
+.tech {
+  display: flex;
+}
+
+.tech-p {
+  padding-right: 5px;
+}
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -249,6 +258,7 @@ img {
 .form input[type='email'],
 .form input[type='password'],
 .form input[type='date'],
+.form input[type='number'],
 .form select,
 .form textarea {
   display: block;
