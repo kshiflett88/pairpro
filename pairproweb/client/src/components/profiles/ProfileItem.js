@@ -2,16 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ProfileItem = ({ profile: {
-  user: {_id, name, avatar}, 
+  user: {_id, name}, 
   status,
   company, 
   location,
-  skills
+  skills,
+  avatar
 }}) => {
 
   return (
     <div className="profile bg-light">
-      <img className="round-img" src={avatar} alt="" />
+       <img
+            className={avatar ? "dev-profile-img" : "imgLogo dev-profile-img my-1"}
+            src={`https://pair-pro-app.s3-us-west-1.amazonaws.com/media/${avatar}`}
+            alt=""
+          />
       <div>
         <h2>{name}</h2> 
         <p>{status} {company && <span> at {company}</span>}</p>

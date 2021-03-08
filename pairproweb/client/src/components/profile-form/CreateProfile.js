@@ -1,13 +1,25 @@
 import React, { Fragment, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import * as awsKeys  from '../../config/keys';
+import S3 from 'react-aws-s3';
 
 import { createProfile } from '../../actions/profile';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+
+
 
 const CreateProfile = ({ history }) => {
+  const config = {
+      bucketName: 'pair-pro-app',
+      dirName: 'media', /* optional */
+      region: awsKeys.region,
+      accessKeyId: awsKeys.accessKeyId,
+      secretAccessKey: awsKeys.secretKey,
+    }  
+
+  const [image, setImage] = useState('')
   const [formData, setFormData] = useState({
+    avatar: '',
     company: '',
     website: '',
     location: '',
@@ -25,6 +37,7 @@ const CreateProfile = ({ history }) => {
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   const {
+    avatar,
     company,
     website,
     location,
@@ -43,8 +56,25 @@ const CreateProfile = ({ history }) => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
+  const changeImage = e => {
+    e.preventDefault()
+    setImage(e.target.files[0])
+    setFormData({ ...formData, [e.target.name]: e.target.files[0].name })
+  }
+
   const onSubmit = e => {
     e.preventDefault();
+
+    const ReactS3Client = new S3(config);
+  
+    ReactS3Client.uploadFile(image, avatar).then((data) => {
+      if (data.status === 204) {
+        console.log("success");
+      } else {
+        console.log("fail");
+      }
+    });
+
     dispatch(createProfile(formData, history));
   }
   return (
@@ -58,6 +88,14 @@ const CreateProfile = ({ history }) => {
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={e => onSubmit(e)}>
+
+         <div className="form-group">
+          <input type="file" placeholder="Choose photo" name="avatar" onChange={e => changeImage(e)}/>
+          <small className="form-text">
+            Choose a profile photo *must be img or jpeg*
+          </small>
+        </div>
+
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>

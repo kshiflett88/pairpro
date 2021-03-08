@@ -6,13 +6,16 @@ import PostItem from '../posts/PostItem';
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
+import { getProfiles } from '../../actions/profile';
 
 const Post = ({ match }) => {
   const dispatch = useDispatch();
   const {post, loading} = useSelector(state => state.post);
+  const {profiles} = useSelector(state => state.profile)
 
   useEffect(() => {
     dispatch(getPost(match.params.id))
+    dispatch(getProfiles())
   }, [])
 
   return loading || post === null ? (
@@ -22,7 +25,7 @@ const Post = ({ match }) => {
         <Link to="/posts" className="btn">
           Back To Posts
         </Link>
-        <PostItem post={post} showActions={false} />
+        <PostItem post={post} profiles={profiles} showActions={false} />
         <CommentForm postId={post._id} />
         <div className="comments">
           {post.comments.map(comment => (

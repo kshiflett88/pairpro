@@ -1,18 +1,25 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
-
+import S3 from 'react-aws-s3';
 import * as profileActions from '../../actions/profile';
+// const { awsKeys } = require('../../config/keys');
+import * as awsKeys  from '../../config/keys';
 
 const EditProfile = ({ history }) => {
   const dispatch = useDispatch();
   const {profile, loading} = useSelector(state => state.profile);
 
-  
-  
-  
+  const config = {
+    bucketName: 'pair-pro-app',
+    dirName: 'media', /* optional */
+    region: awsKeys.region,
+    accessKeyId: awsKeys.accessKeyId,
+    secretAccessKey: awsKeys.secretKey,
+  }  
+
   const [formData, setFormData] = useState({
+    avatar: '',
     company: '',
     website: '',
     location: '',
@@ -27,13 +34,14 @@ const EditProfile = ({ history }) => {
     instagram: ''
   });
 
+  const [image, setImage] = useState('')
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
-
   
   useEffect(() => {
     dispatch(profileActions.getCurrentProfile());
     
     setFormData({
+      avatar: loading || !profile.avatar ? '' : profile.avatar,
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
@@ -49,8 +57,8 @@ const EditProfile = ({ history }) => {
     })
   }, [loading, profileActions.getCurrentProfile])
   
-  
   const {
+    avatar,
     company,
     website,
     location,
@@ -67,9 +75,25 @@ const EditProfile = ({ history }) => {
   
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
+  const changeImage = e => {
+    e.preventDefault()
+    setImage(e.target.files[0])
+    setFormData({ ...formData, [e.target.name]: e.target.files[0].name })
+  }
+
   
   const onSubmit = e => {
     e.preventDefault();
+
+    const ReactS3Client = new S3(config);
+  
+    ReactS3Client.uploadFile(image, avatar).then((data) => {
+      if (data.status === 204) {
+        console.log("success");
+      } else {
+        console.log("fail");
+      }
+    });
   
     dispatch(profileActions.createProfile(formData, history, true));
   };
@@ -85,6 +109,14 @@ const EditProfile = ({ history }) => {
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={e => onSubmit(e)}>
+
+        <div className="form-group">
+          <input type="file" placeholder="Choose photo" name="avatar" onChange={e => changeImage(e)}/>
+          <small className="form-text">
+            Choose a profile photo *must be img or jpeg*
+          </small>
+        </div>
+
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>

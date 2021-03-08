@@ -225,6 +225,17 @@ img {
 
 .round-img {
   border-radius: 50%;
+  height: 14rem;
+}
+
+.dev-profile-img {
+  border-radius: 50%;
+  height: 10rem;
+}
+
+.post-profile-img {
+  border-radius: 50%;
+  height: 8rem;
 }
 
 .line {
@@ -345,6 +356,10 @@ button {
   position: relative;
   background: url('./img/showcase.jpg') no-repeat center center/cover;
   height: 100vh;
+}
+
+.imgLogo {
+  content: url('./img/default-profile-picture.jpg')
 }
 
 .landing-inner {

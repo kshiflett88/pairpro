@@ -16,8 +16,8 @@ const CommentItem = ({
       <div>
         <Link to={`/profile/${user}`}>
           <img
-            className="round-img"
-            src={avatar}
+            className={avatar ? "post-profile-img" : "imgLogo post-profile-img my-1"}
+            src={`https://pair-pro-app.s3-us-west-1.amazonaws.com/media/${avatar}`}
             alt=""
           />
           <h4>{name}</h4>

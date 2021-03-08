@@ -24,6 +24,7 @@ const PostFormTwo = () => {
   }
 
   const {title, text, tech, group } = formData;
+
   const dispatch = useDispatch();
 
   const onChange = e => setFormData({...formData, [e.target.name]: e.target.value})

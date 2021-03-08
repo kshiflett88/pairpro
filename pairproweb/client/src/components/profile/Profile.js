@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
@@ -15,6 +15,7 @@ import ProfileGithub from './ProfileGithub';
 
 const Profile = ({ match }) => {
 
+
   const dispatch = useDispatch();
   const { profile, loading } = useSelector(state => state.profile);
   const auth = useSelector(state => state.auth);
@@ -22,6 +23,8 @@ const Profile = ({ match }) => {
   useEffect(() => {
     dispatch(getProfileById(match.params.id))
   },[getProfileById, match.params.id])
+
+
 
   return (
     <Fragment>

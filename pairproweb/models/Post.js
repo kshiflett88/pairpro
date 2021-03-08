@@ -6,6 +6,10 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'users'
   },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId, // Connects to profile
+    ref: 'profile'
+  },
   title: {
     type: String, 
     required: true

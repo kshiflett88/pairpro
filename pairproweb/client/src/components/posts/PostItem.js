@@ -1,22 +1,40 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {addLike, removeLike, deletePost } from '../../actions/post';
+import { getProfileById } from '../../actions/profile';
 
-const PostItem = ({ post: {_id, title, text, tech, group, name, avatar, user, likes, comments, date}, showActions=true}) => {
+const PostItem = ({ post: {_id, title, text, tech, group, name, avatar, user, likes, comments, date}, profiles, showActions=true}) => {
 
+  const [image, setImage] = useState('')
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
+  // const {profile} = useSelector(state => state.profile)
+
+
+  useEffect(() => {
+    profiles.map(profile => {
+      if (profile.user._id == user) {
+        setImage(profile.avatar)
+      }
+    })
+  },[])
 
   return (
     <Fragment>
       <div className="post bg-white p-1 my-1">
           <div>
             <Link to={`/profile/${user}`}>
-              <img
+              {/* <img
                 className="round-img"
-                src={avatar}
+                // src={avatar}
+                src={`https://pair-pro-app.s3-us-west-1.amazonaws.com/media/${image}`}
+                alt=""
+              /> */}
+              <img
+                className={image ? "post-profile-img my-1" : "imgLogo post-profile-img my-1"}
+                src={`https://pair-pro-app.s3-us-west-1.amazonaws.com/media/${image}`}
                 alt=""
               />
               <h4>{name}</h4>

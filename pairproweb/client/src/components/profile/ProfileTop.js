@@ -7,14 +7,15 @@ const ProfileTop = ({ profile: {
   location, 
   website, 
   social,
-  user: { name, avatar }
+  avatar,
+  user: { name }
 } }) => {
   
   return (
     <div className="profile-top bg-primary p-2">
           <img
-            className="round-img my-1"
-            src={avatar}
+            className={avatar ? "round-img my-1" : "imgLogo round-img my-1"}
+            src={`https://pair-pro-app.s3-us-west-1.amazonaws.com/media/${avatar}`}
             alt=""
           />
           <h1 className="large">{name}</h1>

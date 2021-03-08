@@ -11,6 +11,9 @@ const ProfileSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  imageUrl: {
+    type: String
+  },
   website: {
     type: String
   },

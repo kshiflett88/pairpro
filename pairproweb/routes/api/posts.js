@@ -19,6 +19,7 @@ router.post('/', [auth, [
 
   try {
     const user = await User.findById(req.user.id).select('-password');
+    const profile = await Profile.findOne({ user: req.user.id })
   
     const newPost = new Post ({
       title: req.body.title,
@@ -26,8 +27,9 @@ router.post('/', [auth, [
       tech: req.body.tech.split(',').map(tech => tech.trim()),
       group: req.body.group,
       name: user.name,
-      avatar: user.avatar,
-      user: req.user.id
+      avatar: profile.avatar,
+      user: req.user.id,
+      profile: profile
     });
 
     const post = await newPost.save();
@@ -167,11 +169,12 @@ router.post('/comment/:id', [auth, [
   try {
     const user = await User.findById(req.user.id).select('-password');
     const post = await Post.findById(req.params.id);
+    const profile = await Profile.findOne({ user: req.user.id })
 
     const newComment = {
       text: req.body.text,
       name: user.name,
-      avatar: user.avatar,
+      avatar: profile.avatar,
       user: req.user.id
     };
 
